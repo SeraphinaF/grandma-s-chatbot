@@ -17,7 +17,7 @@ function Chat() {
     e.preventDefault(); // Voorkomt standaard gedrag van formulierindiening
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:3001/chat", {
+      const response = await fetch("https://grandma-s-chatbot-server-lk2flelo1.vercel.app/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
