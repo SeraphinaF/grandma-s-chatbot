@@ -7,8 +7,10 @@ dotenv.config()
 const app = express();
 
 const corsOptions = {
-    origin: 'https://grandma-s-chatbot-client.vercel.app/', // Allow only your frontend domain
-    optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+    origin: 'https://grandma-s-chatbot-client.vercel.app', // Match the frontend URL exactly
+    methods: 'GET,POST',
+    preflightContinue: false,
+    optionsSuccessStatus: 204
   };
   
   app.use(cors(corsOptions));
