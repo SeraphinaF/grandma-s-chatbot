@@ -24,7 +24,7 @@ app.use(express.json())
 // Route to retrieve a joke
 app.get('/', async (req, res) => {
     try {
-        const joke = await model.invoke("Tell me a joke!");
+        const joke = await model.invoke("Is snow cold?");
         res.json({ joke });
     } catch (error) {
         console.error('Error:', error);
