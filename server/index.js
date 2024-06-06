@@ -6,6 +6,7 @@ import { ChatOpenAI } from "@langchain/openai"
 dotenv.config()
 const app = express();
 
+
 const corsOptions = {
     origin: 'https://grandma-s-chatbot-client.vercel.app', // Match the frontend URL exactly
     methods: 'GET,POST',
