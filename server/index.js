@@ -5,12 +5,12 @@ import { ChatOpenAI } from "@langchain/openai"
 
 dotenv.config()
 
-const corsOptions = {
-    origin: 'https://grandma-s-chatbot-client-c6rxelenj.vercel.app/', // Allow only your frontend domain
-    optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
-  };
+// const corsOptions = {
+//     origin: 'https://grandma-s-chatbot-client-c6rxelenj.vercel.app/', // Allow only your frontend domain
+//     optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+//   };
   
-  app.use(cors(corsOptions));
+//   app.use(cors(corsOptions));
 const app = express();
 
 const model = new ChatOpenAI({
