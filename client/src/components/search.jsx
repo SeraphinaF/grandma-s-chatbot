@@ -23,6 +23,7 @@ function Chat() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ message }),
+        mode: 'no-cors'
       });
       if (!response.ok) {
         throw new Error("Failed to fetch");
