@@ -6,7 +6,7 @@ import { ChatOpenAI } from "@langchain/openai"
 dotenv.config()
 
 const app = express();
-app.use(cors({ origin: "*" }));
+// app.use(cors({ origin: "*" }));
 
 const model = new ChatOpenAI({
     azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
@@ -17,7 +17,7 @@ const model = new ChatOpenAI({
 
 app.use(express.json())
 // Route to retrieve a joke
-app.get('/joke', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const joke = await model.invoke("Tell me a joke!");
         res.json({ joke });
@@ -47,9 +47,9 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
-    console.log(`Server running on ${port}, https://grandma-s-chatbot-server.vercel.app/`);
+    console.log(`Server running on ${port}`);
 });
 
