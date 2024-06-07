@@ -7,15 +7,6 @@ dotenv.config()
 const app = express();
 app.use(cors());
 
-// const corsOptions = {
-//     origin: 'https://grandma-s-chatbot-client.vercel.app', // Match the frontend URL exactly
-//     methods: 'GET,POST',
-//     preflightContinue: false,
-//     optionsSuccessStatus: 204
-//   };
-  
-//   app.use(cors(corsOptions));
-
 const model = new ChatOpenAI({
     azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
     azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
