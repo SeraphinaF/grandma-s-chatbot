@@ -34,7 +34,7 @@ app.post('/chat', async (req, res) => {
 
         const chatroles = [
             ["system", "Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. al je berichten zijn max 45 woorden"],
-            ["human", `Ik ben je kleinkind. Stel me gerust, geef me advies of hype me op of zeg simpelweg dat je trots op me bent ${messages.join(', ')}`]
+            ["human", `Stel me gerust, geef me advies of hype me op of zeg simpelweg dat je trots op me bent ${messages.join(', ')}`]
         ];
         
         const answer = await model.invoke(chatroles);
