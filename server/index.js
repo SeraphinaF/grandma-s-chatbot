@@ -20,7 +20,7 @@ app.use(express.json());
 // Function to fetch an inspiring quote
 async function getQuote() {
     try {
-        const response = await fetch('https://quotes.rest/qod?category=inspire&language=nl', {
+        const response = await fetch('https://quotes.rest/qod?category=inspire&language=en', {
             headers: {
                 'Content-Type': 'application/json',
                 'X-TheySaidSo-Api-Secret': process.env.QUOTES_API_KEY // Use your API key if required
