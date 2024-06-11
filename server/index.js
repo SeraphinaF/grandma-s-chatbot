@@ -1,7 +1,6 @@
 import dotenv from 'dotenv'
 import express from 'express';
 import cors from "cors";
-import axios from 'axios';
 import { ChatOpenAI } from "@langchain/openai"
 
 dotenv.config()
@@ -11,7 +10,7 @@ app.use(express.json());
 
 const model = new ChatOpenAI({
     azureOpenAIApiKey: process.env.AZURE_OPENAI_API_KEY,
-    azureOpenAIApiVersion: process.env.OPENAIA_API_VERSION,
+    azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
     azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
     azureOpenAIApiDeploymentName: process.env.ENGINE_NAME,
 });
@@ -27,17 +26,10 @@ app.post('/chat', async (req, res) => {
         const { message } = req.body;
         const messages = Array.isArray(message) ? message : [message];
 
-        // // Fetch a random joke
-        // const jokeResponse = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
-        // const joke = jokeResponse.data.joke;
-
-        // console.log(joke)
-
-        // Define the chat roles as a sweet old lady and include the joke
+        // Define the chat roles as a sweet old lady
         const chatRoles = [
             ["system", "Mijn lieve, wat fijn dat je met me praat. Ik ben altijd hier om je te helpen en naar je te luisteren. Laat me weten hoe ik je kan bijstaan."],
-            ["human", ...messages],
-            // ["system", `Oh, trouwens, wil je een grapje horen? Hier is er een voor jou: ${joke}`]
+            ["human", ...messages] 
         ];
         
         const answer = await model.invoke(chatRoles);
