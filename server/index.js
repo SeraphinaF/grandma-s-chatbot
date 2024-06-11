@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 import express from 'express';
-import cors from 'cors';
-import { ChatOpenAI } from '@langchain/openai';
-import fetch from 'node-fetch';
+import cors from "cors";
+import { ChatOpenAI } from "@langchain/openai"
 
-dotenv.config();
+dotenv.config()
 const app = express();
 app.use(cors());
 
@@ -13,18 +12,26 @@ const model = new ChatOpenAI({
     azureOpenAIApiVersion: process.env.OPENAI_API_VERSION,
     azureOpenAIApiInstanceName: process.env.INSTANCE_NAME,
     azureOpenAIApiDeploymentName: process.env.ENGINE_NAME,
+})
+
+app.use(express.json())
+// Route to retrieve a joke
+app.get('/', async (req, res) => {
+    try {
+        const joke = await model.invoke("Is snow cold?");
+        res.json({ joke });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred while fetching the joke' });
+    }
 });
 
-app.use(express.json());
-
-
-// Function to fetch an inspiring quote
 async function getQuote() {
     try {
         const response = await fetch('https://quotes.rest/qod?category=inspire&language=en', {
             headers: {
                 'Content-Type': 'application/json',
-                'X-TheySaidSo-Api-Secret': '9qGvGi2PhIGJjVK58pOR6WdpSlZBR0HQlCoii93v'
+                'X-TheySaidSo-Api-Secret': process.env.QUOTES_API_KEY // Use your API key if required
             }
         });
 
@@ -33,32 +40,30 @@ async function getQuote() {
         }
 
         const data = await response.json();
-        const quote = data.contents.categories.inspire;
+        const quote = data.contents.quotes[0].quote;
+        console.log("YOU GOT THIS GURLL")
         console.log(quote)
         return quote;
     } catch (error) {
-        console.error('Error fetching the quote:', error.message);
+        console.error('Error fetching the quote:', error);
         return 'Error fetching the quote';
     }
 }
 
-// Route to handle chat messages
+getQuote()
+
 app.post('/chat', async (req, res) => {
     try {
         const { message } = req.body;
         const messages = Array.isArray(message) ? message : [message];
 
-        const quote = await getQuote();
-        console.log(quote)
-
         const chatroles = [
-            ["system", `You are an old sweet lady. All your messages are a maximum of 45 words`],
-            ["human", `Give me advice if I ask you a question or just give me some kind words. You also always add a "${quote}" to cheer me up.${messages.join(', ')}`]
+            ["system", "Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. Je geeft ook altijdal je berichten zijn max 45 woorden"],
+            ["human", `Stel me gerust, geef me advies of hype me op of zeg simpelweg dat je trots op me bent ${messages.join(', ')}`]
         ];
 
         const answer = await model.invoke(chatroles);
 
-        // Send the response back
         res.json({ answer: answer.content });
     } catch (error) {
         console.error('Error:', error);
@@ -71,3 +76,4 @@ const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log(`Server running on ${port}`);
 });
+
