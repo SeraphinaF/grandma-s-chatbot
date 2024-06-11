@@ -16,29 +16,33 @@ const model = new ChatOpenAI({
 });
 
 app.use(express.json());
-console.log('hoi')
 
-// Function to fetch an inspiring quote
-async function getQuote() {
+
+async function getCurrentWeather(city) {
     try {
-        const response = await fetch('https://quotes.rest/qod?category=inspire&language=en', {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-TheySaidSo-Api-Secret': '9qGvGi2PhIGJjVK58pOR6WdpSlZBR0HQlCoii93v'
-            }
-        });
+        const apiKey = process.env.OPENWEATHERMAP_API_KEY; // Your OpenWeatherMap API key
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=Rotterdam&appid=b7eb4b043f059e6f4be530395d9012ff
+        &units=metric`;
+
+        const response = await fetch(apiUrl);
 
         if (!response.ok) {
-            throw new Error('Failed to fetch the quote');
+            throw new Error('Failed to fetch the weather data');
         }
 
         const data = await response.json();
-        const quote = data.contents.categories.inspire;
-        console.log(quote)
-        return quote;
+
+        const weather = {
+            description: data.weather[0].description,
+            temperature: data.main.temp,
+            humidity: data.main.humidity,
+            windSpeed: data.wind.speed
+        };
+
+        return weather;
     } catch (error) {
-        console.error('Error fetching the quote:', error.message);
-        return 'Error fetching the quote';
+        console.error('Error fetching the weather:', error.message);
+        return null;
     }
 }
 
@@ -48,12 +52,12 @@ app.post('/chat', async (req, res) => {
         const { message } = req.body;
         const messages = Array.isArray(message) ? message : [message];
 
-        const quote = await getQuote();
-        console.log(quote)
+        const weather = await getCurrentWeather("YourCityName");
+        console.log(weather);
 
         const chatroles = [
             ["system", `You are an old sweet lady. All your messages are a maximum of 45 words`],
-            ["human", `Give me advice if I ask you a question or just give me some kind words. You also always add a "${quote}" to cheer me up.${messages.join(', ')}`]
+            ["human", `Give me advice if I ask you a question or just give me some kind words. Here is the current weather: ${weather.description}, ${weather.temperature}°C, Humidity: ${weather.humidity}%, Wind Speed: ${weather.windSpeed} m/s. ${messages.join(', ')}`]
         ];
 
         const answer = await model.invoke(chatroles);
