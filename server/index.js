@@ -15,6 +15,11 @@ const model = new ChatOpenAI({
     azureOpenAIApiDeploymentName: process.env.ENGINE_NAME,
 });
 
+// Simple GET route for root path
+app.get('/', (req, res) => {
+    res.send("Welcome to Grandma's Chatbot! Use the /chat endpoint to chat with Grandma.");
+});
+
 // Route to handle chat messages
 app.post('/chat', async (req, res) => {
     try {
