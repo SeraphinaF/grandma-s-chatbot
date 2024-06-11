@@ -41,6 +41,7 @@ async function getQuote() {
 
         const data = await response.json();
         const quote = data.contents.quotes[0].quote;
+        console.log("YOU GOT THIS GURLL")
         console.log(quote)
         return quote;
     } catch (error) {
