@@ -54,7 +54,7 @@ function Chat() {
   };
 
   return (
-    <main className="bg-gray-100">
+    <main className="bg-black-100">
       <div className="flex flex-col h-screen">
         <div id="chat-container" className="flex-1 p-4 w-[45rem] overflow-y-auto">
           {chatHistory.map((msg, index) => (
