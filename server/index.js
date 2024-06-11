@@ -36,7 +36,7 @@ async function getQuote() {
         console.log(quote)
         return quote;
     } catch (error) {
-        console.error('Error fetching the quote:', error);
+        console.error('Error fetching the quote:', error.message);
         return 'Error fetching the quote';
     }
 }
