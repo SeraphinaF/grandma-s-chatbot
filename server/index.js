@@ -41,7 +41,7 @@ async function getQuote() {
 
         const data = await response.json();
         const quote = data.contents.quotes[0].quote;
-        console.log(data)
+        console.log(quote)
         return quote;
     } catch (error) {
         console.error('Error fetching the quote:', error);
