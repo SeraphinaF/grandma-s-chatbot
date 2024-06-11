@@ -21,19 +21,6 @@ app.get('/', (req, res) => {
     res.send("Welcome to Grandma's Chatbot!");
 });
 
-// New route to fetch a random joke
-app.get('/joke', async (req, res) => {
-    try {
-        const response = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
-        const joke = response.data.joke;
-
-        res.json({ joke });
-    } catch (error) {
-        console.error('Error fetching joke:', error);
-        res.status(500).json({ error: 'An error occurred while fetching the joke' });
-    }
-});
-
 // Route to handle chat messages
 app.post('/chat', async (req, res) => {
     try {
