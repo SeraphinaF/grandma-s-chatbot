@@ -50,7 +50,7 @@ app.post('/chat', async (req, res) => {
         console.log(quote)
 
         const chatroles = [
-            ["system", `Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. Je geeft ook altijd een inspirerende quote al je berichten zijn max 45 woorden`],
+            ["system", `Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. Al je berichten zijn max 45 woorden`],
             ["human", `Stel me gerust, geef me advies of hype me op of zeg simpelweg dat je trots op me bent af en toe geef je me een inspirerende "${quote}" om me op te peppen.${messages.join(', ')}`]
         ];
 
