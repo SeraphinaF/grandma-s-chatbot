@@ -7,11 +7,6 @@ dotenv.config()
 const app = express();
 app.use(cors());
 
-const corsOptions = {
-    origin: 'https://grandma-s-chatbot-client.vercel.app/', // Specificeer je frontend URL
-    methods: ['GET', 'POST'], // Specificeer toegestane HTTP-methoden
-    allowedHeaders: ['Content-Type', 'Authorization'], // Specificeer toegestane headers
-};
 app.use(express.json());
 
 const model = new ChatOpenAI({
