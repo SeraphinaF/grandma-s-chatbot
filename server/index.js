@@ -27,11 +27,11 @@ app.post('/chat', async (req, res) => {
         const { message } = req.body;
         const messages = Array.isArray(message) ? message : [message];
 
-        // Fetch a random joke
-        const jokeResponse = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
-        const joke = jokeResponse.data.joke;
+        // // Fetch a random joke
+        // const jokeResponse = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
+        // const joke = jokeResponse.data.joke;
 
-        console.log(joke)
+        // console.log(joke)
 
         // Define the chat roles as a sweet old lady and include the joke
         const chatRoles = [
