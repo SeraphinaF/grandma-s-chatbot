@@ -48,7 +48,9 @@ async function getQuote() {
         return 'Error fetching the quote';
     }
 }
-// Route to handle chat messages
+
+getQuote()
+
 app.post('/chat', async (req, res) => {
     try {
         const { message } = req.body;
