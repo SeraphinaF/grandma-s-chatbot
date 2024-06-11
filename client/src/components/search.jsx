@@ -6,16 +6,12 @@ function Chat() {
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
   const [chatHistory, setChatHistory] = useState(() => {
-    // Ophalen van chatgeschiedenis uit localStorage bij initiële laad
     const savedHistory = localStorage.getItem("chatHistory");
     return savedHistory ? JSON.parse(savedHistory) : [];
   });
 
   useEffect(() => {
-    // Opslaan van chatgeschiedenis in localStorage telkens wanneer deze wordt bijgewerkt
     localStorage.setItem("chatHistory", JSON.stringify(chatHistory));
-
-    // Scroll naar beneden zodra er een nieuw bericht wordt toegevoegd
     const chatContainer = document.getElementById("chat-container");
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }, [chatHistory]);
@@ -24,7 +20,7 @@ function Chat() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch("https://grandma-s-chatbot-server.vercel.app/chat", {
+      const response = await fetch("https://your-server-domain/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +33,6 @@ function Chat() {
       const data = await response.json();
       setAnswer(data.answer);
       setError("");
-      // Update de chatgeschiedenis en sla deze op in localStorage
       setChatHistory((prevHistory) => {
         const newHistory = [...prevHistory, { role: "human", text: message }, { role: "system", text: data.answer }];
         localStorage.setItem("chatHistory", JSON.stringify(newHistory));
@@ -48,7 +43,7 @@ function Chat() {
       setError("Oeps er is iets misgegaan. Oma doet even een dutje. Probeer het later nog eens.");
     } finally {
       setIsLoading(false);
-      setMessage(""); // Leegt het invoerveld voor berichten na verzending
+      setMessage("");
     }
   };
 
