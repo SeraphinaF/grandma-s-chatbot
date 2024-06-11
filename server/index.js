@@ -32,7 +32,7 @@ async function getQuote() {
         }
 
         const data = await response.json();
-        const quote = data.contents.quotes[0].quote;
+        const quote = data.contents.categories.inspire;
         console.log(quote)
         return quote;
     } catch (error) {
