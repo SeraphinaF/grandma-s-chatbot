@@ -20,7 +20,7 @@ app.use(express.json());
 // Function to fetch an inspiring quote
 async function getQuote() {
     try {
-        const response = await fetch('https://quotes.rest/qod?category=inspire&language=en', {
+        const response = await fetch('https://quotes.rest/qod?category=inspire&language=nl', {
             headers: {
                 'Content-Type': 'application/json',
                 'X-TheySaidSo-Api-Secret': process.env.QUOTES_API_KEY // Use your API key if required
@@ -50,8 +50,8 @@ app.post('/chat', async (req, res) => {
         console.log(quote)
 
         const chatroles = [
-            ["system", `Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. Je geeft ook altijd een inspirerende quote al je berichten zijn max 45 woorden: "${quote}"`],
-            ["human", `Stel me gerust, geef me advies of hype me op of zeg simpelweg dat je trots op me bent ${messages.join(', ')}`]
+            ["system", `Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. Je geeft ook altijd een inspirerende quote al je berichten zijn max 45 woorden`],
+            ["human", `Stel me gerust, geef me advies of hype me op of zeg simpelweg dat je trots op me bent af en toe geef je me een inspirerende "${quote}" om me op te peppen.${messages.join(', ')}`]
         ];
 
         const answer = await model.invoke(chatroles);
