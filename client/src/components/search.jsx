@@ -25,6 +25,7 @@ function Chat() {
     setIsLoading(true);
     try {
       const response = await fetch("https://grandma-s-chatbot-server.vercel.app/chat", {
+        mode: 'cors',
         method: "POST",
         headers: {
           "Content-Type": "application/json",
