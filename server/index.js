@@ -47,6 +47,7 @@ app.post('/chat', async (req, res) => {
         const messages = Array.isArray(message) ? message : [message];
 
         const quote = await getQuote();
+        console.log(quote)
 
         const chatroles = [
             ["system", `Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. Je geeft ook altijd een inspirerende quote al je berichten zijn max 45 woorden: "${quote}"`],
