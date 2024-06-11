@@ -16,15 +16,6 @@ const model = new ChatOpenAI({
 
 app.use(express.json())
 // Route to retrieve a joke
-app.get('/', async (req, res) => {
-    try {
-        const joke = await model.invoke("Is snow cold?");
-        res.json({ joke });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'An error occurred while fetching the joke' });
-    }
-});
 
 // Route to handle chat messages
 app.post('/chat', async (req, res) => {
