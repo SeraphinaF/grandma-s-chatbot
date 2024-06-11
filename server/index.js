@@ -31,11 +31,13 @@ app.post('/chat', async (req, res) => {
         const jokeResponse = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
         const joke = jokeResponse.data.joke;
 
+        console.log(joke)
+
         // Define the chat roles as a sweet old lady and include the joke
         const chatRoles = [
             ["system", "Mijn lieve, wat fijn dat je met me praat. Ik ben altijd hier om je te helpen en naar je te luisteren. Laat me weten hoe ik je kan bijstaan."],
             ["human", ...messages],
-            ["system", `Oh, trouwens, wil je een grapje horen? Hier is er een voor jou: ${joke}`]
+            // ["system", `Oh, trouwens, wil je een grapje horen? Hier is er een voor jou: ${joke}`]
         ];
         
         const answer = await model.invoke(chatRoles);
