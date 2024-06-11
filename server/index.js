@@ -16,6 +16,7 @@ const model = new ChatOpenAI({
 });
 
 app.use(express.json());
+console.log('hoi')
 
 // Function to fetch an inspiring quote
 async function getQuote() {
@@ -47,15 +48,8 @@ app.post('/chat', async (req, res) => {
         const { message } = req.body;
         const messages = Array.isArray(message) ? message : [message];
 
-        const response = await fetch('https://quotes.rest/qod?category=inspire&language=en', {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-TheySaidSo-Api-Secret': '9qGvGi2PhIGJjVK58pOR6WdpSlZBR0HQlCoii93v'
-            }
-        });
-
-        const data = await response.json();
-        const quote = data.contents.categories.inspire;
+        const quote = await getQuote();
+        console.log(quote)
 
         const chatroles = [
             ["system", `You are an old sweet lady. All your messages are a maximum of 45 words`],
