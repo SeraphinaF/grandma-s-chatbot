@@ -20,7 +20,7 @@ function Chat() {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch("https://your-server-domain/chat", {
+      const response = await fetch("https://grandma-s-chatbot-client.vercel.app/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
