@@ -32,14 +32,14 @@ app.post('/chat', async (req, res) => {
         const { message } = req.body;
         const messages = Array.isArray(message) ? message : [message];
 
-        // const response = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
-        // const joke = response.data.joke;
+        const response = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
+        const joke = response.data.joke;
 
-        // console.log(joke)
+        console.log(joke)
 
         // Define the chat roles as a sweet old lady
         const chatRoles = [
-            ["system", `Mijn lieve, wat fijn dat je met me praat. Ik ben altijd hier om je te helpen en naar je te luisteren. Laat me weten hoe ik je kan bijstaan.`],
+            ["system", `Mijn lieve, wat fijn dat je met me praat. ${joke} Ik ben altijd hier om je te helpen en naar je te luisteren. Laat me weten hoe ik je kan bijstaan.`],
             ["human", ...messages] 
         ];
         
