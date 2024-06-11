@@ -1,11 +1,10 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import axios from 'axios';
 import { ChatOpenAI } from '@langchain/openai';
+import fetch from 'node-fetch'; // Make sure to install node-fetch
 
 dotenv.config();
-
 const app = express();
 app.use(cors());
 
@@ -18,20 +17,6 @@ const model = new ChatOpenAI({
 
 app.use(express.json());
 
-// Function to fetch weather information
-async function getWeather(city) {
-    const apiKey = process.env.OPENWEATHER_API_KEY; // Ensure this key is in your .env file
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
-    try {
-        const response = await axios.get(url);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching weather data:', error);
-        return null;
-    }
-}
-
 // Route to retrieve a joke
 app.get('/', async (req, res) => {
     try {
@@ -40,6 +25,39 @@ app.get('/', async (req, res) => {
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'An error occurred while fetching the joke' });
+    }
+});
+
+// New Route to handle quotes
+app.get('/quote', async (req, res) => {
+    try {
+        // Fetch a random quote
+        const response = await fetch('https://quotes.rest/qod?language=en', {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-TheySaidSo-Api-Secret': process.env.QUOTES_API_KEY // Ensure to replace with your actual API key if needed
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch the quote');
+        }
+
+        const data = await response.json();
+        const quote = data.contents.quotes[0].quote;
+
+        // Send the quote to the ChatOpenAI model
+        const chatroles = [
+            ["system", "Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. al je berichten zijn max 45 woorden"],
+            ["human", `Here is a quote for you: "${quote}"`]
+        ];
+
+        const answer = await model.invoke(chatroles);
+
+        res.json({ quote: quote, response: answer.content });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred while fetching the quote' });
     }
 });
 
@@ -63,36 +81,8 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-// New route to chat about weather
-app.get('/weather', async (req, res) => {
-    try {
-        const city = req.query.city || 'Amsterdam'; // Default city if none is provided
-        const weatherData = await getWeather(city);
-
-        if (weatherData) {
-            const weatherDescription = weatherData.weather[0].description;
-            const temperature = weatherData.main.temp;
-            const weatherMessage = `Het is momenteel ${temperature}°C en ${weatherDescription} in ${city}.`;
-
-            const chatroles = [
-                ["system", "Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. al je berichten zijn max 45 woorden"],
-                ["human", `Oma, hoe is het weer? Hier in ${city} is het ${weatherDescription} en ${temperature} graden.`]
-            ];
-
-            const answer = await model.invoke(chatroles);
-
-            res.json({ weatherMessage, answer: answer.content });
-        } else {
-            res.status(500).json({ error: 'Unable to fetch weather data' });
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'An error occurred while fetching the weather' });
-    }
-});
-
 const port = process.env.PORT || 3001;
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on ${port}`);
 });
