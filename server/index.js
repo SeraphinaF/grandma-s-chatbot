@@ -46,16 +46,13 @@ app.post('/chat', async (req, res) => {
         const { message } = req.body;
         const messages = Array.isArray(message) ? message : [message];
 
-        // Fetch an inspiring quote
         const quote = await getQuote();
 
-        // Include the quote in chatroles
         const chatroles = [
             ["system", `Je bent een lief oud vrouwtje dat altijd een advies en een glimlach paraat heeft. Je geeft ook altijd een inspirerende quote al je berichten zijn max 45 woorden: "${quote}"`],
             ["human", `Stel me gerust, geef me advies of hype me op of zeg simpelweg dat je trots op me bent ${messages.join(', ')}`]
         ];
 
-        // Invoke the ChatOpenAI model
         const answer = await model.invoke(chatroles);
 
         // Send the response back
