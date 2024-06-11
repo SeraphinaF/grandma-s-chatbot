@@ -30,7 +30,6 @@ app.post('/chat', async (req, res) => {
         const response = await axios.get('https://v2.jokeapi.dev/joke/Any?type=single');
         const joke = response.data.joke;
 
-        console.log(joke)
 
         // Define the chat roles as a sweet old lady
         const chatRoles = [
