@@ -1,10 +1,10 @@
-import Search from "./components/search";
+import ChatBot from "./components/ChatBot";
 
 
 function App() {
   return (
     <div>
-      <Search/>
+      <ChatBot/>
     </div>
   );
 }
