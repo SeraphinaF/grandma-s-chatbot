@@ -61,7 +61,9 @@ function ChatBot() {
         console.log("Fetch aborted");
       } else {
         console.error("Error:", error);
-        setError("Oeps er is iets misgegaan. Oma doet even een dutje. Probeer het later nog eens.");
+        setError(
+          "Oeps er is iets misgegaan. Oma doet even een dutje. Probeer het later nog eens."
+        );
       }
     } finally {
       setIsLoading(false);
@@ -106,6 +108,7 @@ function ChatBot() {
               onChange={(e) => setMessage(e.target.value)}
               className="bg-gray-200 px-6 pr-60 py-2 rounded-xl"
               placeholder="Type a message..."
+              disabled={isLoading} 
             />
             <button
               type="submit"
