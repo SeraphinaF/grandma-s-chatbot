@@ -32,7 +32,7 @@ app.post('/chat', async (req, res) => {
 
         const chatRoles = [
             ["system", `Mijn lieve, wat fijn dat je met me praat. Ik ben altijd hier om je te helpen en naar je te luisteren. Laat me weten hoe ik je kan bijstaan.`],
-            ["human", ...messages] 
+            ["human", `Wat fijn dat je me altijd bij staat en steunt. Je voelt aan als mijn oma die altijd voor me klaarstond${messages}`] 
         ];
         
         const answer = await model.invoke(chatRoles);
